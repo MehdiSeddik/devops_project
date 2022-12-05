@@ -1,0 +1,30 @@
+---
+- name: Installer python3-flask, gunicorn3, nginx
+  apt:
+    name:
+      - python3-flask
+      - gunicorn
+      - nginx
+    update_cache: yes
+
+- name: Copier l'application d'exemple Flask Salut
+  copy:
+    src: "../ansible/4/{{ item }}"
+    dest: "/opt/engineering/{{ item }}"
+    group: developers
+    mode: '0750'
+  loop:
+    - salut.py
+    - wsgi.py
+
+- name: Copier le fichier unitaire systemd pour la webap Salut
+  copy:
+    src: "../ansible/4/salut.service"
+    dest: "/etc/systemd/system/salut.service"
+
+- name: Lancer et activer l'application Salut
+  systemd:
+    name: salut.service
+    daemon_reload: yes
+    state: started
+    enabled: yes

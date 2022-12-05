@@ -1,0 +1,42 @@
+- name: Installer libpam-google-authenticator
+  apt:
+    name: "libpam-google-authenticator"
+    update_cache: yes
+    state: present
+
+- name: Copier la configuration pour GoogleAuthenticator
+  copy:
+    src: ../ansible/3/google_authenticator
+    dest: /home/florian/.google_authenticator
+    owner: florian
+    group: florian
+    mode: '0600'
+
+- name: Désactiver l'authentification par mot de passe pour SSH
+  lineinfile:
+    dest: "/etc/pam.d/sshd"
+    regex: "@include common-auth"
+    line: "#@include common-auth"
+
+- name: Configurer PAM pour utiliser GoogleAuthenticator pour l'accès via SSH
+  lineinfile:
+    dest: "/etc/pam.d/sshd"
+    line: "auth required pam_google_authenticator.so nullok"
+
+- name: Régler ChallengeResponseAuthentication à Yes
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "^ChallengeResponseAuthentication (yes|no)"
+    line: "ChallengeResponseAuthentication yes"
+    state: present
+
+- name: Définir les méthodes d'authentification pour florian, vagrant et ubuntu
+  blockinfile:
+    path: "/etc/ssh/sshd_config"
+    block: |
+      Match User "vagrant,ubuntu"
+          AuthenticationMethods publickey
+      Match User "florian,!vagrant,!ubuntu"
+          AuthenticationMethods publickey,keyboard-interactive
+    state: present
+  notify: "Redémarrer le serveur SSH"

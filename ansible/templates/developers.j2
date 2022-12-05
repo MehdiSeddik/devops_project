@@ -1,0 +1,15 @@
+# Alias commandes 
+Cmnd_Alias	START_SALUT    = /bin/systemctl start salut , \
+				    /bin/systemctl start salut.service
+Cmnd_Alias	STOP_SALUT     = /bin/systemctl stop salut , \
+				    /bin/systemctl stop salut.service
+Cmnd_Alias	RESTART_SALUT  = /bin/systemctl restart salut , \
+				    /bin/systemctl restart salut.service
+
+# Host Alias
+Host_Alias      LOCAL_VM = {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}
+
+# Détails utilisateurs
+%developers LOCAL_VM = (root) NOPASSWD: START_SALUT, STOP_SALUT, \
+	    	       RESTART_SALUT, \
+		       sudoedit {{ salut_webapp_file }}

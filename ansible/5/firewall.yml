@@ -1,0 +1,31 @@
+---
+
+- name: Active le niveau de journalisation (low)
+  ufw:
+    logging: 'low'
+
+- name: Autorise SSH sur le port 22
+  ufw:
+    rule: allow
+    port: '22'
+    proto: tcp
+
+- name: Autorise l'accès au port 5000 (application web Salut)
+  ufw:
+    rule: allow
+    port: '5000'
+    proto: tcp
+
+- name: Limite les taux de connexions abusives sur le port 5000
+  ufw:
+    rule: limit
+    port: '5000'
+    proto: tcp
+
+
+- name: Rejette (drop) tout le reste du traffic
+  ufw:
+    state: enabled
+    policy: deny
+    direction: incoming
+
