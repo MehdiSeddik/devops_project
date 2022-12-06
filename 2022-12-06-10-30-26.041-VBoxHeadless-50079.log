@@ -1,0 +1,12 @@
+Log created: 2022-12-06T10:30:26.411361000Z
+Process ID:  50079 (0xc39f)
+Parent PID:  1551 (0x60f)
+Executable:  /usr/lib/virtualbox/VBoxHeadless
+Arg[0]: /usr/lib/virtualbox/VBoxHeadless
+Arg[1]: --comment
+Arg[2]: devops_project_web_1670320926065_8270
+Arg[3]: --startvm
+Arg[4]: cb317fde-97d9-44cb-a938-08d4ff8be2eb
+Arg[5]: --vrde
+Arg[6]: config
+AddRef: illegal refcnt=3221225469 state=2
