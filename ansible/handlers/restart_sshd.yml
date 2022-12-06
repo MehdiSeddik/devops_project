@@ -1,4 +1,0 @@
-- name: Redémarrer le serveur SSH
-  service:
-    name: sshd
-    state: restarted

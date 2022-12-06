@@ -1,0 +1,11 @@
+---
+- name: web server installation
+  hosts: all
+  become: yes
+  become_method: sudo
+  remote_user: root
+  tasks:
+    - name: install apache
+      apt: name=apache2
+    - name: install php
+      apt: name=php

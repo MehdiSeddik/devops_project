@@ -1,6 +1,0 @@
-- name: Définir le fichier de clé SSH autorisé pour l'utilisateur florian
-  authorized_key:
-    user: florian 
-    state: present
-    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/devsecops.pub') }}"
-
