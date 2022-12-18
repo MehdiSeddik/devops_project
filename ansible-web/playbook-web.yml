@@ -7,8 +7,6 @@
     - ../vars/vars.yml
   tasks:
 
-
-    
     - name: Install PHP Packages
       apt: name={{ item }} update_cache=yes state=latest
       loop: "{{ php_modules }}"

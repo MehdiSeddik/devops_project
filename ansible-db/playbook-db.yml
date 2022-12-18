@@ -1,0 +1,29 @@
+---
+- hosts: all
+  name: MariaDB
+  become: yes
+  become_method: sudo
+  vars_files:
+    - ../vars/vars.yml
+  gather_facts: true
+  vars:
+  tasks:
+    - name: Install MariaDB
+      apt: name={{ item }} update_cache=yes state=latest
+      loop: "{{ mariadb_packages }}"
+      tags: [ system ]
+
+    - name: start mariadb
+      service:
+        name: mariadb
+        enabled: true
+        state: started
+        
+    - name: mysql_root_password
+      mysql_user:
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+        user: root
+        check_implicit_admin: true
+        password: "{{ mysql_root_password }}"
+        host: localhost
