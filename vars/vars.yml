@@ -1,7 +1,8 @@
 ---
 #System Settings
 php_modules: [ 'php', 'php-mysql' ]
-
+mariadb_packages: [ 'mariadb-server', 'mariadb-client' ]
+python_packages: [ 'python', 'python-pymysql', 'python-mysqldb', PyMySQL, MySQL-python ]
 mysql_modules: ['mariadb-server', 'mariadb-client']
 #MySQL Settings
 mysql_root_password: "mysql_root_password"
